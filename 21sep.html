@@ -657,18 +657,25 @@ if (letterModal) {
     }
   });
 }
-// --- LECTURA DE PARÁMETROS URL ---
+// --- LECTURA DE NOMBRES DESDE EL CÓDIGO ---
 const parametros = new URLSearchParams(window.location.search);
-// Si no hay parámetro '?nombre=', usará 'Amiga' por defecto para no romperse
-const nombreAmiga = parametros.get("nombre") || "Amiga";
+// Usamos una clave corta en la URL (ej: ?a=luz, ?a=nata, ?a=karina)
+const clave = parametros.get("a") || "default";
 
-// Capitalizar la primera letra por si lo escribes en minúscula en la URL
-const nombreFormateado = nombreAmiga.charAt(0).toUpperCase() + nombreAmiga.slice(1);
+// Diccionario interno para que la URL sea más limpia
+const directorio = {
+  aylin: "Aylin",
+  made: "Made",
+  default: "Amiga"
+};
 
-// Reemplazar en el DOM manteniendo la estructura de tus spans dorados
-document.getElementById("nombreHero").innerHTML = `${nombreFormateado}<span>.</span>`;
-document.getElementById("nombreCarta").textContent = `${nombreFormateado},`;
-document.getElementById("nombreFinal").innerHTML = `Feliz día, <span>${nombreFormateado}.</span>`;
+// Buscamos el nombre correspondiente
+const nombreFinal = directorio[clave] || directorio["default"];
+
+// Inyectamos el nombre en los tres lugares manteniendo el estilo dorado
+document.getElementById("nombreHero").innerHTML = `${nombreFinal}<span>.</span>`;
+document.getElementById("nombreCarta").textContent = `${nombreFinal},`;
+document.getElementById("nombreFinal").innerHTML = `Feliz día, <span>${nombreFinal}.</span>`;
 </script>
 </body>
 </html>
